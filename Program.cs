@@ -1,59 +1,50 @@
 ﻿using System;
 
-namespace Module3Discussion
+class Program
 {
-    class Octopus
+    static void Main(string[] args)
     {
-        // Regular field (mutable)
-        public int Age;
+        Console.WriteLine("Enter the first number:");
+        string input1 = Console.ReadLine();
 
-        // Readonly fields (immutable after initialization)
-        public readonly int Legs;
-        public readonly int Eyes;
+        Console.WriteLine("Enter the second number:");
+        string input2 = Console.ReadLine();
 
-        // Regular field with private setter (encapsulation example)
-        public string Name { get; private set; }
-
-        // Constructor
-        public Octopus(string name, int age)
+        try
         {
-            Name = name;
-            Age = age;
-            Legs = 8;   // fixed value for all octopuses
-            Eyes = 2;   // fixed value for all octopuses
+            int number1 = Convert.ToInt32(input1);
+            int number2 = Convert.ToInt32(input2);
+
+            int result = Divide(number1, number2);
+            Console.WriteLine($"The result of {number1} divided by {number2} is: {result}");
+        }
+        catch (FormatException ex)
+        {
+            Console.WriteLine("Error: One or both inputs are not valid integers.");
+            Console.WriteLine($"Detailed error: {ex.Message}");
+        }
+        catch (DivideByZeroException ex)
+        {
+            Console.WriteLine("Error: Division by zero is not allowed.");
+            Console.WriteLine($"Detailed error: {ex.Message}");
+        }
+        catch (OverflowException ex)
+        {
+            Console.WriteLine("Error: Number too large or too small for Int32.");
+            Console.WriteLine($"Detailed error: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: An unexpected error occurred.");
+            Console.WriteLine($"Detailed error: {ex.Message}");
         }
 
-        // Method to display info
-        public void DisplayInfo()
-        {
-            Console.WriteLine($"Octopus Name: {Name}");
-            Console.WriteLine($"Age: {Age}");
-            Console.WriteLine($"Legs: {Legs}");
-            Console.WriteLine($"Eyes: {Eyes}");
-            Console.WriteLine("-----------------------");
-        }
+        Console.WriteLine("\nPress any key to exit...");
+        Console.ReadKey();
     }
 
-    class Program
+    static int Divide(int a, int b)
     {
-        static void Main(string[] args)
-        {
-            // Create two octopus objects
-            Octopus o1 = new Octopus("Edwin", 5);
-            Octopus o2 = new Octopus("Josef", 3);
-
-            // Display their info
-            o1.DisplayInfo();
-            o2.DisplayInfo();
-
-            // Modify Age (mutable field)
-            o1.Age = 6;
-            Console.WriteLine($"{o1.Name}'s new age: {o1.Age}");
-
-            // Try to modify readonly field (uncomment to test)
-            // o1.Legs = 10; // <-- This will cause a compile-time error
-
-            Console.ReadLine();
-        }
+        return a / b;
     }
 }
